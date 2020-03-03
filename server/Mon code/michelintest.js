@@ -11,7 +11,7 @@ var listnumero = []
 //Je récupère dans une liste toute les url de chaques restaurants et je retourne ce tableau
 async function myURL() {
 	var linkResto = []
-	for (let i = 1; i < 567 / 40 + 1; i++) {
+	for (let i = 1; i < 567 / 40; i++) {
 		const baseURL = 'https://guide.michelin.com/fr/fr/restaurants/bib-gourmand/page/' + i;
 		const reponse = await axios(baseURL)
 		const html = reponse.data;
@@ -29,6 +29,7 @@ async function myURL() {
 			}
 		}
 	}
+	console.log(linkResto.length)
 	return linkResto
 }
 
@@ -41,9 +42,11 @@ async function getNameAdressNum() {
 			const html = reponse.data;
 			const $ = cheerio.load(html);
 			const name = $('body > main > div.restaurant-details > div.container > div > div.col-xl-4.order-xl-8.col-lg-5.order-lg-7.restaurant-details__aside > div.restaurant-details__heading.d-lg-none > h2').text();
-			const adress = $('body > main > div.restaurant-details > div.container > div > div.col-xl-4.order-xl-8.col-lg-5.order-lg-7.restaurant-details__aside > div.restaurant-details__heading.d-lg-none > ul > li:nth-child(1)').attr("href");
-			const numero = $('body > main > div.restaurant-details > div.container > div > div.col-xl-8.col-lg-7 > section:nth-child(4) > div.row > div:nth-child(1) > div > div:nth-child(1) > div > div > a').text()
-			console.log(name + ' ' + adress + ' ' + numero);
+			const adress = $('body > main > div.restaurant-details > div.container > div > div.col-xl-4.order-xl-8.col-lg-5.order-lg-7.restaurant-details__aside > div.restaurant-details__heading.d-lg-none > ul > li:nth-child(1)').text();
+			//const adress = $('body > main > div.restaurant-details > div.container > div > div.col-xl-4.order-xl-8.col-lg-5.order-lg-7.restaurant-details__aside > div.restaurant-details__heading.d-lg-none > ul > li:nth-child(1)')
+			const numero = $('body > main > div.restaurant-details > div.container > div > div.col-xl-8.col-lg-7 > section:nth-child(4) > div.row > div:nth-child(1) > div > div:nth-child(1) > div > div > a').attr("href");
+			
+			console.log(name + ' ' + adress+' '+ numero);
 			listname.push(name)
 			listnumero.push(numero)
 			listadress.push(adress)
@@ -53,15 +56,7 @@ async function getNameAdressNum() {
 	return listadress,listname,listnumero
 }
 
-
-async function gestlist(){
-	var all_list = await getNameAdressNum()
-	console.log(all_list.listadress)
-	console.log(all_list.listname)
-	console.log(all_list.listnumero)
-}
-
-gestlist()
+getNameAdressNum()
 
 
 

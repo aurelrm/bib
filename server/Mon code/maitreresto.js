@@ -10,7 +10,6 @@ module.exports.scrapePage = async page =>{
 		'url' : 'https://www.maitresrestaurateurs.fr/annuaire/ajax/loadresult',
 		'method' : 'POST',
 		'headers0' : {'content-type'  : 'application/x-www-form-urlencoded'},
-	
 	};
 	const response = await axios(options);
 	const {data,status} = response;
